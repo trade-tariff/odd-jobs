@@ -1,0 +1,33 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@4.3.0
+
+jobs:
+  release-notes:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          command: |
+            git clone --depth=1 https://github.com/trade-tariff/trade-tariff-frontend.git
+            git clone --depth=1 https://github.com/trade-tariff/trade-tariff-backend.git
+            git clone --depth=1 https://github.com/trade-tariff/trade-tariff-duty-calculator.git
+            git clone --depth=1 https://github.com/trade-tariff/trade-tariff-admin.git
+            git clone --depth=1 https://github.com/trade-tariff/trade-tariff-search-query-parser.git
+      - run:
+          name: "List release changes"
+          command: "./scripts/release-notes.sh"
+
+workflows:
+  say-hello-workflow:
+    jobs:
+      - release-notes
+
+
+
+
+
+
+
